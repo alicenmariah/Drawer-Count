@@ -119,6 +119,22 @@ button:hover {
     background-color: #0d47a1;
 }
 
+#csv-btn {
+    background-color: #1976d2;
+}
+
+#csv-btn:hover {
+    background-color: #0d47a1;
+}
+
+#cancel-btn {
+    background-color: #757575;
+}
+
+#cancel-btn:hover {
+    background-color: #616161;
+}
+
 @media print {
     .actions {
         display: none;

@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const cashTakenInput = document.getElementById('cash-taken');
     const newDrawerInput = document.getElementById('new-drawer');
     const resetBtn = document.getElementById('reset-btn');
-    const printBtn = document.getElementById('print-btn');
     const saveBtn = document.getElementById('save-btn');
     
     // Format currency
@@ -70,25 +69,74 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Print button
-    printBtn.addEventListener('click', function() {
-        window.print();
-    });
-    
-    // Save button (using localStorage for demo)
+    // Helper function to generate CSV content
+    function generateCSV() {
+        const headers = ['Denomination', 'Count', 'Value'];
+        const rows = [];
+        
+        // Add all cash counts
+        amountInputs.forEach((input, index) => {
+            const denomination = input.closest('tr').cells[0].textContent;
+            const count = input.value || '0';
+            const value = cashValues[index].textContent;
+            rows.push([denomination, count, value]);
+        });
+        
+        // Add summary rows
+        rows.push(
+            ['', '', ''],
+            ['Total in drawer', '', totalCell.textContent],
+            ['Expected amount', '', formatCurrency(expectedInput.value || 0)],
+            ['Variance', '', varianceCell.textContent],
+            ['Cash Taken', '', formatCurrency(cashTakenInput.value || 0)],
+            ['New Drawer', '', formatCurrency(newDrawerInput.value || 0)],
+            ['Date', '', new Date().toLocaleString()]
+        );
+        
+        // Convert to CSV format
+        const csvContent = [headers, ...rows]
+            .map(row => row.map(cell => `"${cell}"`).join(','))
+            .join('\n');
+            
+        return csvContent;
+    }
+
+    // Replace the save button functionality
     saveBtn.addEventListener('click', function() {
-        const data = {
-            amounts: Array.from(amountInputs).map(input => input.value),
-            expected: expectedInput.value,
-            cashTaken: cashTakenInput.value,
-            newDrawer: newDrawerInput.value,
-            date: new Date().toISOString()
-        };
-        
-        const savedData = JSON.parse(localStorage.getItem('cashDrawerData') || '[]');
-        savedData.push(data);
-        localStorage.setItem('cashDrawerData', JSON.stringify(savedData));
-        
-        alert('Cash drawer count saved successfully!');
+        const saveOptions = document.createElement('div');
+        saveOptions.innerHTML = `
+            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                        background: #2c2c2c; padding: 20px; border-radius: 8px; z-index: 1000;
+                        border: 1px solid #444; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+                <h3 style="margin-bottom: 15px;">Save As:</h3>
+                <button id="csv-btn" style="width: 100%; margin-bottom: 10px;">CSV (for Google Sheets)</button>
+                <button id="pdf-btn" style="width: 100%; margin-bottom: 10px;">PDF</button>
+                <button id="cancel-btn" style="width: 100%;">Cancel</button>
+            </div>
+        `;
+        document.body.appendChild(saveOptions);
+
+        // CSV download
+        document.getElementById('csv-btn').addEventListener('click', function() {
+            const csvContent = generateCSV();
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString().split('T')[0];
+            link.href = URL.createObjectURL(blob);
+            link.download = `cash_drawer_count_${timestamp}.csv`;
+            link.click();
+            document.body.removeChild(saveOptions);
+        });
+
+        // PDF download (uses existing print functionality)
+        document.getElementById('pdf-btn').addEventListener('click', function() {
+            document.body.removeChild(saveOptions);
+            window.print();  // Most browsers will allow saving as PDF when printing
+        });
+
+        // Cancel button
+        document.getElementById('cancel-btn').addEventListener('click', function() {
+            document.body.removeChild(saveOptions);
+        });
     });
 }); 
