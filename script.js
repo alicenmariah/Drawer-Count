@@ -103,21 +103,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Replace the save button functionality
     saveBtn.addEventListener('click', function() {
+        // Create and append the modal div
         const saveOptions = document.createElement('div');
+        saveOptions.id = 'save-modal';
         saveOptions.innerHTML = `
             <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
                         background: #2c2c2c; padding: 20px; border-radius: 8px; z-index: 1000;
                         border: 1px solid #444; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-                <h3 style="margin-bottom: 15px;">Save As:</h3>
-                <button id="csv-btn" style="width: 100%; margin-bottom: 10px;">CSV (for Google Sheets)</button>
-                <button id="pdf-btn" style="width: 100%; margin-bottom: 10px;">PDF</button>
-                <button id="cancel-btn" style="width: 100%;">Cancel</button>
+                <h3 style="margin-bottom: 15px; color: white;">Save As:</h3>
+                <button id="csv-btn" style="width: 100%; margin-bottom: 10px; padding: 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">CSV (for Google Sheets)</button>
+                <button id="pdf-btn" style="width: 100%; margin-bottom: 10px; padding: 8px; background: #388e3c; color: white; border: none; border-radius: 4px; cursor: pointer;">PDF</button>
+                <button id="cancel-btn" style="width: 100%; padding: 8px; background: #757575; color: white; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
             </div>
         `;
         document.body.appendChild(saveOptions);
 
-        // CSV download
-        document.getElementById('csv-btn').addEventListener('click', function() {
+        // Add event listeners AFTER the elements are created
+        const csvBtn = document.getElementById('csv-btn');
+        const pdfBtn = document.getElementById('pdf-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const modal = document.getElementById('save-modal');
+
+        csvBtn.addEventListener('click', function() {
             const csvContent = generateCSV();
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
@@ -125,18 +132,16 @@ document.addEventListener('DOMContentLoaded', function() {
             link.href = URL.createObjectURL(blob);
             link.download = `cash_drawer_count_${timestamp}.csv`;
             link.click();
-            document.body.removeChild(saveOptions);
+            document.body.removeChild(modal);
         });
 
-        // PDF download (uses existing print functionality)
-        document.getElementById('pdf-btn').addEventListener('click', function() {
-            document.body.removeChild(saveOptions);
-            window.print();  // Most browsers will allow saving as PDF when printing
+        pdfBtn.addEventListener('click', function() {
+            document.body.removeChild(modal);
+            window.print();
         });
 
-        // Cancel button
-        document.getElementById('cancel-btn').addEventListener('click', function() {
-            document.body.removeChild(saveOptions);
+        cancelBtn.addEventListener('click', function() {
+            document.body.removeChild(modal);
         });
     });
 }); 
