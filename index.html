@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Drawer Counter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ALL DRAWERS MUST BE COUNTED AT END OF DAY</h1>
+            <h2>ALL GREY SHADED BOXES MUST BE FILLED IN BY MANAGER</h2>
+        </div>
+        
+        <div class="cash-counter">
+            <table id="cash-table">
+                <thead>
+                    <tr>
+                        <th>Bill Value</th>
+                        <th>Amount</th>
+                        <th>Cash Value</th>
+                        <th colspan="2">Total in drawer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>$100</td>
+                        <td><input type="number" class="amount-input" data-value="100" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" rowspan="3" class="total-cell">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>$50</td>
+                        <td><input type="number" class="amount-input" data-value="50" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>$20</td>
+                        <td><input type="number" class="amount-input" data-value="20" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>$10</td>
+                        <td><input type="number" class="amount-input" data-value="10" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="expected-label">Expected in drawer</td>
+                    </tr>
+                    <tr>
+                        <td>$5</td>
+                        <td><input type="number" class="amount-input" data-value="5" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="expected-cell manager-input"><input type="number" id="expected-amount" step="0.01" min="0"></td>
+                    </tr>
+                    <tr>
+                        <td>$1</td>
+                        <td><input type="number" class="amount-input" data-value="1" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="variance-label">Variance</td>
+                    </tr>
+                    <tr>
+                        <td>$0.50</td>
+                        <td><input type="number" class="amount-input" data-value="0.5" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="variance-cell">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>$10.00 (roll)</td>
+                        <td><input type="number" class="amount-input" data-value="10" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="cash-taken-label">Cash Taken</td>
+                    </tr>
+                    <tr>
+                        <td>$5.00 (roll)</td>
+                        <td><input type="number" class="amount-input" data-value="5" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="cash-taken-cell manager-input"><input type="number" id="cash-taken" step="0.01" min="0"></td>
+                    </tr>
+                    <tr>
+                        <td>$2.00 (roll)</td>
+                        <td><input type="number" class="amount-input" data-value="2" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="new-drawer-label">New Drawer</td>
+                    </tr>
+                    <tr>
+                        <td>$0.50 (roll)</td>
+                        <td><input type="number" class="amount-input" data-value="0.5" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2" class="new-drawer-cell manager-input"><input type="number" id="new-drawer" step="0.01" min="0"></td>
+                    </tr>
+                    <tr>
+                        <td>$0.25</td>
+                        <td><input type="number" class="amount-input" data-value="0.25" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>$0.10</td>
+                        <td><input type="number" class="amount-input" data-value="0.1" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>$0.05</td>
+                        <td><input type="number" class="amount-input" data-value="0.05" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>$0.01</td>
+                        <td><input type="number" class="amount-input" data-value="0.01" min="0"></td>
+                        <td class="cash-value">$0.00</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="actions">
+            <button id="reset-btn">Reset</button>
+            <button id="print-btn">Print</button>
+            <button id="save-btn">Save</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
