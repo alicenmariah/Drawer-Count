@@ -125,25 +125,36 @@ button:hover {
     }
     
     body {
-        background-color: white;
-        color: black;
+        background-color: white !important;
+        color: black !important;
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
     }
     
     .header, table, th, td {
-        background-color: white;
-        color: black;
-        border-color: #ddd;
+        background-color: white !important;
+        color: black !important;
+        border-color: #ddd !important;
+    }
+    
+    input[type="number"] {
+        background-color: white !important;
+        color: black !important;
+        border-color: #ddd !important;
+    }
+    
+    .total-cell, .expected-cell, .cash-taken-cell, .new-drawer-cell {
+        background-color: white !important;
+        color: black !important;
     }
     
     .variance-cell {
-        background-color: #d4edda;
-        color: #155724;
+        background-color: #d4edda !important;
+        color: #155724 !important;
     }
     
     .new-drawer-cell {
-        background-color: #b8daff;
-        color: #004085;
+        background-color: #b8daff !important;
+        color: #004085 !important;
     }
 } 
