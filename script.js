@@ -34,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const variance = total - expected;
         varianceCell.textContent = formatCurrency(variance);
         
+        // Calculate cash to remove (to leave $250)
+        const targetDrawerAmount = 250;
+        const cashToRemove = total - targetDrawerAmount;
+        cashTakenInput.value = cashToRemove > 0 ? cashToRemove.toFixed(2) : '0.00';
+        
         // Set color for variance (dark mode colors)
         if (variance < 0) {
             varianceCell.style.backgroundColor = '#4a1c24';
